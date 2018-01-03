@@ -7,12 +7,8 @@ public class FauxGravityAttractor : MonoBehaviour {
 	[System.NonSerialized] public float GRAVITY = 66.7f;
 	[System.NonSerialized] public float mass = 5f;
 
-	public FauxGravityBody playerBody;
-
 	// Use this for initialization
 	void Start () {
-		// FauxGravityBody playerBody = (GameObject.FindObjectOfType(typeof(PlayerController)) as PlayerController).gameObject.GetComponent<FauxGravityBody>();
-
 		DrawGravityGuides();
 	}
 	
@@ -27,7 +23,7 @@ public class FauxGravityAttractor : MonoBehaviour {
 		foreach (var f in displayFs) {
 			GameObject instance = Instantiate(Resources.Load("Circle", typeof(GameObject)), transform.position, transform.rotation) as GameObject;
 			Circle c = instance.GetComponent<Circle>();
-			float r = Mathf.Sqrt ( (GRAVITY * mass * playerBody.mass) / f );
+			float r = Mathf.Sqrt ( (GRAVITY * mass * Player.instance.body.mass) / f );
 			c.xradius = c.yradius = r;
 		}
 	}

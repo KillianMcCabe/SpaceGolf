@@ -21,10 +21,10 @@ public class Player : MonoBehaviour {
 	// shared variables
 	[System.NonSerialized] public STATE state = STATE.UNLANCHED;
 	[System.NonSerialized] public Vector3 launchVector;
+	[System.NonSerialized] public FauxGravityBody body;
 
 	// private variables
 	private Vector3 moveDirection;
-	private FauxGravityBody body;
 	private Material m_Material;
 	private PlayerCamera playerCamera;
 
