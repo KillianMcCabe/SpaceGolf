@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using cakeslice;
 
 public class Player : MonoBehaviour {
 
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour {
 	// private variables
 	private Vector3 moveDirection;
 	private Material m_Material;
+	private Outline outline;
 	private PlayerCamera playerCamera;
 
 	void Awake()
@@ -34,14 +36,19 @@ public class Player : MonoBehaviour {
 			instance = this;
 		} else {
 			Destroy(this);
+			return;
 		}
+
+		outline = GetComponent<Outline>();
+		outline.color = 1;
+
+		body = GetComponent<FauxGravityBody>();
+		body.enabled = false;
+		m_Material = GetComponentInChildren<Renderer>().material;
 	}
 
 	// Use this for initialization
 	void Start () {
-		body = GetComponent<FauxGravityBody>();
-		body.enabled = false;
-		m_Material = GetComponentInChildren<Renderer>().material;
 		playerCamera = GameObject.FindObjectOfType(typeof(PlayerCamera)) as PlayerCamera;
 	}
 	
@@ -65,7 +72,7 @@ public class Player : MonoBehaviour {
 					if (hit.transform.gameObject == this.gameObject) {
 						if (state == STATE.UNLANCHED) {
 							state = STATE.LAUNCHING;
-							m_Material.color = Color.red;
+							outline.color = 0;
 						}
 					}
 					
@@ -111,7 +118,7 @@ public class Player : MonoBehaviour {
     {
 		if (state == STATE.UNLANCHED) {
 			// Change the Color of the GameObject when the mouse hovers over it
-			m_Material.color = Color.yellow;
+			outline.color = 2;
 		}
     }
 
@@ -119,7 +126,7 @@ public class Player : MonoBehaviour {
     {
 		if (state == STATE.UNLANCHED) {
 			//Change the Color back to white when the mouse exits the GameObject
-			m_Material.color = Color.white;
+			outline.color = 1;
 		}
     }
 
