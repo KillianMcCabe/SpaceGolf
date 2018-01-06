@@ -10,7 +10,8 @@ public class Player : MonoBehaviour {
 	public enum STATE {
 		UNLANCHED,
 		LAUNCHING,
-		LAUNCHED
+		LAUNCHED,
+		DOCKING
 	};
 
 	// const variables
@@ -112,7 +113,15 @@ public class Player : MonoBehaviour {
 		
 	}
 
-	
+	public void SetState(STATE newState) {
+		state = newState;
+
+		switch (newState) {
+			case STATE.DOCKING:
+				Player.instance.body.enabled = false;
+			break;
+		}
+	}
 
 	void OnMouseOver()
     {
