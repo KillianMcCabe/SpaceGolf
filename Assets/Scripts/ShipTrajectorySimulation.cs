@@ -22,6 +22,8 @@ public class ShipTrajectorySimulation : MonoBehaviour
 	private int segmentCount;
 
 	private FauxGravityAttractor[] attractors;
+
+	private GravityBall[] gravityBalls;
  
 	void Start() {
 		lineRenderer = GetComponent<LineRenderer>();
@@ -35,6 +37,7 @@ public class ShipTrajectorySimulation : MonoBehaviour
 		lineRenderer.endColor = endColor;
 
 		attractors = GameObject.FindObjectsOfType(typeof(FauxGravityAttractor)) as FauxGravityAttractor[];
+		gravityBalls = GameObject.FindObjectsOfType(typeof(GravityBall)) as GravityBall[];
 	}
 
 	void FixedUpdate()
@@ -69,6 +72,10 @@ public class ShipTrajectorySimulation : MonoBehaviour
  
 			// Add velocity from gravity
 			foreach ( var a in attractors ) {
+				segVelocity += a.AttractTest(segments[segmentCount - 1]) * segTime;
+			}
+
+			foreach ( var a in gravityBalls ) {
 				segVelocity += a.AttractTest(segments[segmentCount - 1]) * segTime;
 			}
 
